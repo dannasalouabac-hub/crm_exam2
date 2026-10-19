@@ -12,7 +12,7 @@ app.use(cors({
 
 app.get('/',(req,res)=>
 {
-    res.sendFile(path.join(__dirname, '../front'));
+    res.sendFile(path.join(__dirname, 'front/index.html'));
 });
 
 async function connectDb()
