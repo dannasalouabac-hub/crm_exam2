@@ -1,40 +1,38 @@
 const express = require("express");
 const cors = require("cors");
-const dotenv=require("dotenv");
-const mongoose=require("mongoose");
+const dotenv = require("dotenv");
+const mongoose = require("mongoose");
 const path = require("path");
+
 dotenv.config();
-const app=express();
+const app = express();
 
-app.use(cors({
-    origin: ["http://localhost:5500", "http://127.0.0.1:5500"]
-}));
+app.use(cors());
+app.use(express.json());
 
-app.get('/',(req,res)=>
-{
-    res.sendFile(path.join(__dirname, 'front/index.html'));
+app.use(express.static(path.join(__dirname, "../front")));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, "../front/index.html"));
 });
 
-async function connectDb()
-{
-    try{
-    const ri=process.env.MONGO_URI;
-    if(!ri)
-    {
-        throw new Error("erreur de connexion");
-    }
-    await mongoose.connect(ri);
-    console.log("connexion avce succes!!");
+app.get('/api/test', (req, res) => {
+    res.json({ message: "Connexion Front-Back réussie !" });
+});
 
-    const port=process.env.PORT || 3000;
-    app.listen(port,()=>
-    {
-        console.log("le port en écoute est:"+port);
-    })
-    }
-    catch(error){
-        console.error("connection impossible!!"+error.message);
-        process.exit(1);
+async function connectDb() {
+    try {
+        await mongoose.connect(process.env.MONGO_URI);
+        console.log("MongoDB connecté !!!");
+    } catch (error) {
+        console.error("Erreur MongoDB :", error.message);
     }
 }
 connectDb();
+
+if (process.env.NODE_ENV !== 'production') {
+    const port = process.env.PORT || 3000;
+    app.listen(port, () => console.log(`http://localhost:${port}`));
+}
+
+module.exports = app;

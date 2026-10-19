@@ -6,6 +6,12 @@
     <title>Document</title>
     <link rel="stylesheet" href="./index.css">
 </head>
+<script>
+    fetch('/api/test')
+        .then(res => res.json())
+        .then(data => alert(data.message))
+        .catch(err => console.error(err));
+</script>
 <body>
     
 <h1>hello from frontend!!</h1>
