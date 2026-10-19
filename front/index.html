@@ -3,23 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Mon CRM</title>
     <link rel="stylesheet" href="./index.css">
 </head>
-<script>
-    const apiUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-    ? 'http://localhost:3000' 
-    : '';
-    fetch(`${apiUrl}/api/test`)
-    .then(res => res.json())
-    .then(data => console.log(data))
-    .catch(err => console.error("Erreur:", err));
-</script>
 <body>
     
-<h1>hello from frontend!!</h1>
-<p id="backend-message">Connecting to backend...</p>
+    <h1>hello from frontend!!</h1>
+    <p id="backend-message">Connecting to backend...</p>
 
-    <script src="./index.js"></script>
+    <script>
+        // On détecte si on est en local ou sur Vercel
+        const apiUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+            ? 'http://localhost:3000' 
+            : '';
+
+        fetch(`${apiUrl}/api/test`)
+            .then(res => res.json())
+            .then(data => {
+                // On affiche le message du backend sur la page !
+                document.getElementById('backend-message').innerText = data.message;
+                document.getElementById('backend-message').style.color = "green";
+            })
+            .catch(err => {
+                document.getElementById('backend-message').innerText = "Erreur de connexion au backend";
+                document.getElementById('backend-message').style.color = "red";
+                console.error("Erreur:", err);
+            });
+    </script>
 </body>
 </html>
