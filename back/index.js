@@ -19,6 +19,8 @@ app.get('/api/test', (req, res) => {
     res.json({ message: "Connexion Front-Back réussie !" });
 });
 
+
+
 async function connectDb() {
     try {
         await mongoose.connect(process.env.MONGO_URI);
