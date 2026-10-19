@@ -15,15 +15,6 @@ app.use(express.static(path.join(__dirname, "../front")));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, "../front/index.html"));
 });
-app.get('/', (req, res) => {
-    res.send(' Hello from le front, Saloua Danna');
-});
-app.get('/login', (req, res) => {
-    res.send('Bienvenue sur la route login.');
-});
-app.get('/sign-up', (req, res) => {
-    res.send('Bienvenue sur la route sign-up.');
-});
 app.get('/api/test', (req, res) => {
     res.json({ message: "Connexion Front-Back réussie !" });
 });
