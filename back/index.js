@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const dotenv=require("dotenv");
 const mongoose=require("mongoose");
-
+const path = require("path");
 dotenv.config();
 const app=express();
 
@@ -12,7 +12,7 @@ app.use(cors({
 
 app.get('/',(req,res)=>
 {
-    res.sendFile("index.html",{root:__dirname});
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 async function connectDb()
