@@ -12,7 +12,7 @@ app.use(cors({
 
 app.get('/',(req,res)=>
 {
-    res.send("hello from backend");
+    res.sendFile("index.html",{root:__dirname});
 });
 
 async function connectDb()
