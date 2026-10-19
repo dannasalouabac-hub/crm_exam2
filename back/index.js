@@ -1,9 +1,14 @@
 const express = require("express");
+const cors = require("cors");
 const dotenv=require("dotenv");
 const mongoose=require("mongoose");
 
 dotenv.config();
 const app=express();
+
+app.use(cors({
+    origin: ["http://localhost:5500", "http://127.0.0.1:5500"]
+}));
 
 app.get('/',(req,res)=>
 {
@@ -21,7 +26,7 @@ async function connectDb()
     await mongoose.connect(ri);
     console.log("connexion avce succes!!");
 
-    const port=process.env.PORT;
+    const port=process.env.PORT || 3000;
     app.listen(port,()=>
     {
         console.log("le port en écoute est:"+port);
@@ -32,4 +37,4 @@ async function connectDb()
         process.exit(1);
     }
 }
-module.exports=connectDb();
+connectDb();
